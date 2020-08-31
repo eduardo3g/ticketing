@@ -8,10 +8,10 @@ build:
   local:
     push: false
   artifacts:
-    - image: ticketing/auth
+    - image: eduardo3g/auth
       context: auth
       docker:
-        dockerfile: dockerfile
+        dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.ts'
