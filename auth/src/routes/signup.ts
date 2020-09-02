@@ -34,10 +34,13 @@ router.post('/api/users/signup', [
   const user = User.build({ email, password });
   await user.save();
 
-  const userJwt = jwt.sign({
+  const userJwt = jwt.sign(
+    {
     id: user.id,
     email: user.email,
-  }, 'dj13çljesaud9031ewdnsa');
+    },
+    process.env.JWT_KEY!,
+  );
 
   // Store JWT on session object
   request.session = {
