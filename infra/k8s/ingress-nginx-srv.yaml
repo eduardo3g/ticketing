@@ -1,0 +1,26 @@
+# This service should be not needed for production nginx-ingress.
+# But, minikube doesn't have nginx-ingress service.
+# So, you will need to create this service externally
+#
+# And refer this service as in the following
+#
+#     http://ingress-nginx.kube-system.svc.cluster.local/api/users/currentuser
+#
+# Note that kube-system instead of ingress-nginx
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ingress-nginx
+  name: ingress-nginx
+  namespace: kube-system
+spec:
+  selector:
+    # double check if this matches your nginx-ingress-controller label
+    app.kubernetes.io/name: nginx-ingress-controller
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  type: ClusterIP
