@@ -73,7 +73,7 @@ it('Should return 400 if the user provides an invalid title or price', async () 
       title: 'Valid title',
       price: -20
     })
-    .expect(400);    
+    .expect(400);
 });
 
 it('Should update the ticket provided valid inputs', async () => {
