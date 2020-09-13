@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default ({ req }) => {
+const BuildClient = ({ req }) => {
   if (typeof window === 'undefined') {
     // We are on the server
 
@@ -15,3 +15,5 @@ export default ({ req }) => {
     });
   }
 };
+
+export default BuildClient;
