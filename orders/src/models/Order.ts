@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@e3gtickets/common';
+import { TicketDoc } from './Ticket';
 
 interface OrderAttrs {
   userId: string;
