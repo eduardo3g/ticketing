@@ -27,7 +27,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  stauts: {
+  status: {
     type: String,
     required: true,
     enum: Object.values(OrderStatus),
