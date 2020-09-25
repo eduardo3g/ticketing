@@ -12,9 +12,10 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage (data: TicketCreatedEvent['data'], message: Message) {
-    const { title, price } = data;
+    const { id, title, price } = data;
 
     const ticket = await Ticket.build({
+      id,
       title,
       price,
     });
