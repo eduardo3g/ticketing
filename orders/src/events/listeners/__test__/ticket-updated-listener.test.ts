@@ -51,3 +51,17 @@ it('Should ack the message', async () => {
 
   expect(message.ack).toHaveBeenCalled();
 });
+
+it('Should NOT call ack if the event has a skipped versio numeber',
+  async () => {
+    const { message, data, listener } = await setup();
+
+    data.version = 10;
+
+    try {
+      await listener.onMessage(data, message);
+    } catch (error) {}
+
+    expect(message.ack).not.toHaveBeenCalled();
+  }
+);
