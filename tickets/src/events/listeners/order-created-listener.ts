@@ -8,7 +8,7 @@ import {
 import { queueGroupName } from './queue-group-name';
 import { Ticket } from '../../models/Ticket';
 
-export class OrderCreatedLisneter extends Listener<OrderCreatedEvent> {
+export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   readonly subject = Subjects.OrderCreated;
   queueGroupName = queueGroupName;
 
