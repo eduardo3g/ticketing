@@ -47,5 +47,9 @@ it('Should set the userId of the ticket', async () => {
 });
 
 it('Should ack the message', async () => {
+  const { listener, data, message } = await setup();
 
+  await listener.onMessage(data, message);
+
+  expect(message.ack).toHaveBeenCalled();
 });
