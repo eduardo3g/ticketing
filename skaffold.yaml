@@ -39,4 +39,12 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .                   
+            dest: .
+    - image: eduardo3g/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .                 
