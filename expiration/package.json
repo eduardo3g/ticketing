@@ -19,13 +19,13 @@
   "license": "ISC",
   "dependencies": {
     "@e3gtickets/common": "^1.0.14",
+    "@types/bull": "^3.14.2",
     "bull": "^3.18.0",
     "node-nats-streaming": "^0.2.6",
     "ts-node-dev": "^1.0.0-pre.61",
     "typescript": "^4.0.2"
   },
   "devDependencies": {
-    "@types/bull": "^3.14.2",
     "@types/jest": "^26.0.13",
     "jest": "^26.4.2",
     "ts-jest": "^26.3.0"
