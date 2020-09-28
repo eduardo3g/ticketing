@@ -1,6 +1,7 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { app } from '../../app';
+import { Ticket } from '../../models/Ticket';
 import { natsWrapper } from '../../nats-wrapper';
 
 it('Should return 404 if the provided id does not exist', async () => {
@@ -126,4 +127,29 @@ it('Should publish an event', async () => {
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it('Should reject updates if the ticket is reserved', async () => {
+  const cookie = global.signin();
+
+  const response = await request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookie)
+    .send({
+      title: 'Valid title',
+      price: 20
+    });
+
+  const ticket = await Ticket.findById(response.body.id);
+  ticket!.set({ orderId: mongoose.Types.ObjectId().toHexString() });
+  await ticket!.save();
+
+  await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set('Cookie', cookie)
+    .send({
+      title: 'Updated title',
+      price: 100
+    })
+    .expect(400);
 });
