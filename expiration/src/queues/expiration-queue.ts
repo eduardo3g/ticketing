@@ -12,7 +12,7 @@ const expirationQueue = new Queue<Payload>('order:expiration', {
 
 expirationQueue.process(async (job) => {
   console.log(
-    'Publish an expiration:comlpete event for orderId',
+    'Publish an expiration:complete event for orderId',
     job.data.orderId
   );
 });
