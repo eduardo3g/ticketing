@@ -47,4 +47,12 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .                 
+            dest: .
+    - image: eduardo3g/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
