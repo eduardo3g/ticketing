@@ -22,6 +22,7 @@ router.post('/api/payments',
       .isEmpty()
       .withMessage('You must supply an order ID')
   ],
+  validateRequest,
   async (request: Request, response: Response) => {
     response.send({ success: true });
 });
