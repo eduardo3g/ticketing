@@ -4,7 +4,9 @@ import {
   requireAuth,
   validateRequest,
   BadRequestError,
-  NotFoundError
+  NotFoundError,
+  NotAuthorizedError,
+  OrderStatus
 } from '@e3gtickets/common';
 import { Order } from '../models/Order';
 
@@ -24,6 +26,22 @@ router.post('/api/payments',
   ],
   validateRequest,
   async (request: Request, response: Response) => {
+    const { token, orderId } = request.body;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      throw new NotFoundError();
+    }
+
+    if (order.userId !== request.currentUser!.id) {
+      throw new NotAuthorizedError(); 
+    }
+
+    if (order.status === OrderStatus.Cancelled) {
+      throw new BadRequestError('Cannot pay for an cancelled order');
+    }
+
     response.send({ success: true });
 });
 
