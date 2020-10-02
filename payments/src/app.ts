@@ -8,6 +8,7 @@ import {
   NotFoundError,
   currentUser,
 } from '@e3gtickets/common';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,6 +21,8 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 app.all('*', async (request, response) => {
   throw new NotFoundError();
