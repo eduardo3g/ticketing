@@ -11,6 +11,8 @@ import {
 import { stripe } from '../stripe';
 import { Order } from '../models/Order';
 import { Payment } from '../models/Payment';
+import { PaymentCreatedPublisher } from '../events/publishers/payment-created-publisher';
+import { natsWrapper } from '../nats-wrapper'; 
 
 const router = express.Router();
 
@@ -56,6 +58,12 @@ router.post('/api/payments',
     });
 
     await payment.save();
+
+    await new PaymentCreatedPublisher(natsWrapper.client).publish({
+      id: payment.id,
+      orderId: payment.orderId,
+      stripeId: payment.stripeId,
+    });
 
     response.status(201).send({ id: payment.id });
 });
