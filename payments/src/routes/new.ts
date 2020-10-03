@@ -49,7 +49,7 @@ router.post('/api/payments',
       source: token,
     });
 
-    response.send({ success: true });
+    response.status(201).send({ success: true });
 });
 
 export { router as createChargeRouter };
