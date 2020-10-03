@@ -10,6 +10,7 @@ import {
 } from '@e3gtickets/common';
 import { stripe } from '../stripe';
 import { Order } from '../models/Order';
+import { Payment } from '../models/Payment';
 
 const router = express.Router();
 
@@ -43,13 +44,20 @@ router.post('/api/payments',
       throw new BadRequestError('Cannot pay for an cancelled order');
     }
 
-    await stripe.charges.create({
-      currency: 'BRL',
-      amount: order.price * 100, // multiply by 100 because stripe works with cents
+    const charge = await stripe.charges.create({
+      currency: 'brl',
+      amount: order.price * 100, // multiply by 100 because stripe works smallest currency unit (e.g: cents, centavos)
       source: token,
     });
 
-    response.status(201).send({ success: true });
+    const payment = Payment.build({
+      orderId,
+      stripeId: charge.id,
+    });
+
+    await payment.save();
+
+    response.status(201).send({ id: payment.id });
 });
 
 export { router as createChargeRouter };
