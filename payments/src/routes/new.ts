@@ -50,6 +50,7 @@ router.post('/api/payments',
       currency: 'brl',
       amount: order.price * 100, // multiply by 100 because stripe works smallest currency unit (e.g: cents, centavos)
       source: token,
+      description: `Charge created by the order ${orderId} at ${new Date().toISOString()}`
     });
 
     const payment = Payment.build({
